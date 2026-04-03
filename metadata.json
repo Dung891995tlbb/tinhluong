@@ -1,0 +1,5 @@
+{
+  "name": "Vietnam Salary Calculator",
+  "description": "Công cụ tính lương Gross sang Net và Net sang Gross tại Việt Nam với các tùy chỉnh đặc thù.",
+  "requestFramePermissions": []
+}
