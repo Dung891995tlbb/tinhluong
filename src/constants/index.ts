@@ -8,11 +8,9 @@ export const DEFAULT_PARAMS: CalculationParams = {
 };
 
 export const PIT_BRACKETS = [
-  { limit: 5000000, rate: 0.05 },
-  { limit: 10000000, rate: 0.10 },
-  { limit: 18000000, rate: 0.15 },
-  { limit: 32000000, rate: 0.20 },
-  { limit: 52000000, rate: 0.25 },
-  { limit: 80000000, rate: 0.30 },
+  { limit: 10000000, rate: 0.05 },
+  { limit: 30000000, rate: 0.10 },
+  { limit: 60000000, rate: 0.20 },
+  { limit: 100000000, rate: 0.30 },
   { limit: Infinity, rate: 0.35 },
 ];

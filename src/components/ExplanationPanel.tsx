@@ -14,17 +14,15 @@ export default function ExplanationPanel() {
         <section>
           <h3 className="font-bold text-slate-800 mb-2 flex items-center gap-2">
             <CheckCircle2 className="w-4 h-4 text-green-500" />
-            Quy tắc Thuế TNCN (7 bậc)
+            Quy tắc Thuế TNCN (5 bậc - Mới 2026)
           </h3>
-          <p className="mb-2">Áp dụng bảng thuế suất lũy tiến từng phần theo quy định hiện hành của pháp luật Việt Nam:</p>
+          <p className="mb-2">Áp dụng bảng thuế suất lũy tiến từng phần theo quy định mới (5 bậc):</p>
           <ul className="space-y-1.5 list-none">
-            <li className="flex justify-between border-b border-slate-50 pb-1"><span>Đến 5 triệu VNĐ</span> <strong className="text-slate-800">5%</strong></li>
-            <li className="flex justify-between border-b border-slate-50 pb-1"><span>Trên 5 - 10 triệu VNĐ</span> <strong className="text-slate-800">10%</strong></li>
-            <li className="flex justify-between border-b border-slate-50 pb-1"><span>Trên 10 - 18 triệu VNĐ</span> <strong className="text-slate-800">15%</strong></li>
-            <li className="flex justify-between border-b border-slate-50 pb-1"><span>Trên 18 - 32 triệu VNĐ</span> <strong className="text-slate-800">20%</strong></li>
-            <li className="flex justify-between border-b border-slate-50 pb-1"><span>Trên 32 - 52 triệu VNĐ</span> <strong className="text-slate-800">25%</strong></li>
-            <li className="flex justify-between border-b border-slate-50 pb-1"><span>Trên 52 - 80 triệu VNĐ</span> <strong className="text-slate-800">30%</strong></li>
-            <li className="flex justify-between"><span>Trên 80 triệu VNĐ</span> <strong className="text-slate-800">35%</strong></li>
+            <li className="flex justify-between border-b border-slate-50 pb-1"><span>Đến 10 triệu VNĐ</span> <strong className="text-slate-800">5%</strong></li>
+            <li className="flex justify-between border-b border-slate-50 pb-1"><span>Trên 10 - 30 triệu VNĐ</span> <strong className="text-slate-800">10%</strong></li>
+            <li className="flex justify-between border-b border-slate-50 pb-1"><span>Trên 30 - 60 triệu VNĐ</span> <strong className="text-slate-800">20%</strong></li>
+            <li className="flex justify-between border-b border-slate-50 pb-1"><span>Trên 60 - 100 triệu VNĐ</span> <strong className="text-slate-800">30%</strong></li>
+            <li className="flex justify-between"><span>Trên 100 triệu VNĐ</span> <strong className="text-slate-800">35%</strong></li>
           </ul>
         </section>
 
