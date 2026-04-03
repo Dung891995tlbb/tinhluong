@@ -19,8 +19,8 @@ import BreakdownTable from './components/BreakdownTable';
 import ExplanationPanel from './components/ExplanationPanel';
 
 export default function App() {
-  const [mode, setMode] = useState<CalculationMode>('gross-to-net');
-  const [inputValue, setInputValue] = useState<string>('30,000,000');
+  const [mode, setMode] = useState<CalculationMode>('net-to-gross');
+  const [inputValue, setInputValue] = useState<string>('50,000,000');
   const [result, setResult] = useState<CalculationResult | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [showSettings, setShowSettings] = useState(false);

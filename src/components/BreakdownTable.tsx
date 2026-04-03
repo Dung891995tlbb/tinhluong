@@ -15,16 +15,30 @@ export default function BreakdownTable({ result, mode }: BreakdownTableProps) {
         <h3 className="font-bold text-slate-800">Chi tiết tính toán</h3>
       </div>
       <div className="space-y-3">
-        <BreakdownItem label="Lương Gross" value={result.gross} />
-        <BreakdownItem label="Phụ cấp (Ăn ca + Điện thoại)" value={result.allowance} isInfo />
-        <BreakdownItem label="Tiền thuê nhà công ty trả" value={result.rent} isInfo />
+        <BreakdownItem label="Lương Gross" value={result.gross} className="text-slate-900 font-bold" />
+        <BreakdownItem label="- Lương đóng BH" value={result.luongBH} isInfo />
+        <BreakdownItem label="- Ăn ca" value={result.anCa} isInfo />
+        <BreakdownItem label="- Xăng xe" value={result.xangXe} isInfo />
+        <BreakdownItem label="- Điện thoại" value={result.dienThoai} isInfo />
+        <BreakdownItem label="- Thuê nhà" value={result.thueNha} isInfo />
+        <BreakdownItem label="- Chuyên cần" value={result.chuyenCan} isInfo />
+        <BreakdownItem label="=> Hoàn thành CV (Biến đổi)" value={result.hoanThanhCV} isHighlight />
+        
         <div className="h-px bg-slate-100 my-2" />
-        <BreakdownItem label="Bảo hiểm cố định" value={result.insurance} isNegative />
-        <BreakdownItem label="Giảm trừ gia cảnh" value={result.personalDeduction} isNegative />
-        <BreakdownItem label="Tiền thuê nhà tính vào TNCT" value={result.taxableHousing} isHighlight />
-        <BreakdownItem label="Thu nhập tính thuế (TNTT)" value={result.taxableIncome} isHighlight />
+        
+        <BreakdownItem label="Thu nhập chịu thuế (chưa tính thuê nhà)" value={result.totalTaxableIncome - result.taxableRent} />
+        <BreakdownItem label="Tiền thuê nhà tính vào TNCT (Max 15%)" value={result.taxableRent} />
+        <BreakdownItem label="Tổng Thu nhập chịu thuế (TNCT)" value={result.totalTaxableIncome} isHighlight />
+        
+        <div className="h-px bg-slate-100 my-2" />
+
+        <BreakdownItem label="Giảm trừ gia cảnh" value={result.familyDeduction} isNegative />
+        <BreakdownItem label={`Bảo hiểm được trừ (${(result.insurance / result.luongBH * 100).toFixed(1)}%)`} value={result.insurance} isNegative />
+        <BreakdownItem label="Thu nhập tính thuế (TNTT)" value={result.incomeSubjectToTax} isHighlight />
         <BreakdownItem label="Thuế TNCN" value={result.pit} isNegative />
+        
         <div className="h-px bg-slate-100 my-2" />
+        
         <BreakdownItem 
           label="Lương Net thực nhận" 
           value={result.net} 

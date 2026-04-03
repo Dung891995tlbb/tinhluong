@@ -27,33 +27,41 @@ export function calculatePIT(tntt: number): number {
  * Calculate Net Salary from Gross Salary
  */
 export function calculateNetFromGross(gross: number, params: CalculationParams): CalculationResult {
-  const { nonTaxableAllowance, companyPaidRent, fixedInsurance, personalDeduction } = params;
-
-  // 1. Phần thu nhập chịu thuế chưa tính thuê nhà = Gross - Phụ cấp - Tiền thuê nhà
-  const taxableIncomeBeforeHousing = Math.max(0, gross - nonTaxableAllowance - companyPaidRent);
-
-  // 2. Tiền thuê nhà tính vào TNCT = 0.15 * Phần thu nhập chịu thuế trên (tối đa bằng Tiền thuê nhà công ty trả)
-  const taxableHousing = Math.min(companyPaidRent, taxableIncomeBeforeHousing * 0.15);
-
-  // 3. Thu nhập tính thuế (TNTT) = Phần thu nhập chịu thuế + Tiền thuê nhà tính vào TNCT - Giảm trừ gia cảnh - Bảo hiểm
-  const tntt = Math.max(0, taxableIncomeBeforeHousing + taxableHousing - personalDeduction - fixedInsurance);
-
-  // 4. Áp dụng bảng thuế suất lũy tiến
-  const pit = calculatePIT(tntt);
-
-  // 5. Lương Net = Gross - Bảo hiểm - Thuế TNCN
-  const net = gross - fixedInsurance - pit;
+  const { luongBH, anCa, xangXe, dienThoai, thueNha, chuyenCan, giamTruGiaCanh, tyLeBH } = params;
+  
+  const hoanThanhCV = gross - (luongBH + anCa + xangXe + dienThoai + thueNha + chuyenCan);
+  
+  const nonTaxable = xangXe + dienThoai;
+  const tnctChuaThueNha = gross - nonTaxable - thueNha;
+  
+  const taxableRent = Math.min(thueNha, tnctChuaThueNha * 0.15);
+  const totalTaxableIncome = tnctChuaThueNha + taxableRent;
+  
+  const insurance = luongBH * (tyLeBH / 100);
+  
+  const incomeSubjectToTax = Math.max(0, totalTaxableIncome - insurance - giamTruGiaCanh);
+  
+  const pit = calculatePIT(incomeSubjectToTax);
+  
+  const net = gross - insurance - pit;
 
   return {
     gross,
     net,
-    insurance: fixedInsurance,
-    allowance: nonTaxableAllowance,
-    taxableHousing,
-    personalDeduction: personalDeduction,
-    taxableIncome: tntt,
-    pit,
-    rent: companyPaidRent
+    luongBH,
+    anCa,
+    xangXe,
+    dienThoai,
+    thueNha,
+    chuyenCan,
+    hoanThanhCV,
+    nonTaxable,
+    taxableRent,
+    totalTaxableIncome,
+    insurance,
+    familyDeduction: giamTruGiaCanh,
+    incomeSubjectToTax,
+    pit
   };
 }
 

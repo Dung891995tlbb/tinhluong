@@ -1,20 +1,32 @@
 export interface CalculationParams {
-  nonTaxableAllowance: number;
-  companyPaidRent: number;
-  fixedInsurance: number;
-  personalDeduction: number;
+  luongBH: number;
+  anCa: number;
+  xangXe: number;
+  dienThoai: number;
+  thueNha: number;
+  chuyenCan: number;
+  giamTruGiaCanh: number;
+  tyLeBH: number;
 }
 
 export interface CalculationResult {
   gross: number;
   net: number;
+  luongBH: number;
+  anCa: number;
+  xangXe: number;
+  dienThoai: number;
+  thueNha: number;
+  chuyenCan: number;
+  hoanThanhCV: number;
+  
+  nonTaxable: number;
+  taxableRent: number;
+  totalTaxableIncome: number;
   insurance: number;
-  allowance: number;
-  taxableHousing: number;
-  personalDeduction: number;
-  taxableIncome: number;
+  familyDeduction: number;
+  incomeSubjectToTax: number;
   pit: number;
-  rent: number;
 }
 
 export type CalculationMode = 'gross-to-net' | 'net-to-gross';

@@ -44,19 +44,27 @@ export default function ExplanationPanel() {
           <ul className="space-y-2.5">
             <li className="flex items-start gap-2">
               <ArrowRight className="w-4 h-4 text-slate-400 shrink-0 mt-0.5" />
-              <span><strong className="text-slate-700">TNCT</strong> = Gross - Phụ cấp không chịu thuế - Tiền thuê nhà</span>
+              <span><strong className="text-slate-700">Lương Gross</strong> = Lương BH + Ăn ca + Xăng xe + Điện thoại + Thuê nhà + Chuyên cần + Hoàn thành CV</span>
             </li>
             <li className="flex items-start gap-2">
               <ArrowRight className="w-4 h-4 text-slate-400 shrink-0 mt-0.5" />
-              <span><strong className="text-slate-700">Thuê nhà chịu thuế</strong> = Min(Tiền thuê nhà, 15% * TNCT)</span>
+              <span><strong className="text-slate-700">TNCT (chưa thuê nhà)</strong> = Gross - Xăng xe - Điện thoại - Thuê nhà</span>
             </li>
             <li className="flex items-start gap-2">
               <ArrowRight className="w-4 h-4 text-slate-400 shrink-0 mt-0.5" />
-              <span><strong className="text-slate-700">TNTT</strong> = TNCT + Thuê nhà chịu thuế - Bảo hiểm - Giảm trừ gia cảnh</span>
+              <span><strong className="text-slate-700">Thuê nhà chịu thuế</strong> = Min(Tiền thuê nhà, 15% * TNCT chưa thuê nhà)</span>
             </li>
             <li className="flex items-start gap-2">
               <ArrowRight className="w-4 h-4 text-slate-400 shrink-0 mt-0.5" />
-              <span><strong className="text-slate-700">Thuế TNCN</strong> = Tính theo bậc thang trên TNTT</span>
+              <span><strong className="text-slate-700">Bảo hiểm</strong> = Lương đóng BH * Tỷ lệ trích BH (VD: 9.5%)</span>
+            </li>
+            <li className="flex items-start gap-2">
+              <ArrowRight className="w-4 h-4 text-slate-400 shrink-0 mt-0.5" />
+              <span><strong className="text-slate-700">TNTT</strong> = TNCT (chưa thuê nhà) + Thuê nhà chịu thuế - Bảo hiểm - Giảm trừ gia cảnh</span>
+            </li>
+            <li className="flex items-start gap-2">
+              <ArrowRight className="w-4 h-4 text-slate-400 shrink-0 mt-0.5" />
+              <span><strong className="text-slate-700">Thuế TNCN</strong> = Tính theo bảng thuế 5 bậc trên TNTT</span>
             </li>
             <li className="flex items-start gap-2">
               <ArrowRight className="w-4 h-4 text-slate-400 shrink-0 mt-0.5" />

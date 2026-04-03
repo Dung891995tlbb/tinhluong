@@ -1,10 +1,14 @@
 import { CalculationParams } from "../types";
 
 export const DEFAULT_PARAMS: CalculationParams = {
-  nonTaxableAllowance: 8000000,
-  companyPaidRent: 15000000,
-  fixedInsurance: 950000,
-  personalDeduction: 15500000,
+  luongBH: 10000000,
+  anCa: 5000000,
+  xangXe: 5000000,
+  dienThoai: 3000000,
+  thueNha: 15000000,
+  chuyenCan: 3000000,
+  giamTruGiaCanh: 15500000,
+  tyLeBH: 9.5,
 };
 
 export const PIT_BRACKETS = [
