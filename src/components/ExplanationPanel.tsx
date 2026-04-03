@@ -72,25 +72,6 @@ export default function ExplanationPanel() {
             </li>
           </ul>
         </section>
-
-        <section>
-          <h3 className="font-bold text-slate-800 mb-2 flex items-center gap-2">
-            <CheckCircle2 className="w-4 h-4 text-green-500" />
-            Cách tính Net sang Gross
-          </h3>
-          <p className="leading-relaxed mb-2">
-            Do quy tắc <strong>"Tiền thuê nhà chịu thuế bị giới hạn ở mức 15%"</strong> và <strong>Bảng thuế lũy tiến 5 bậc</strong>, hàm số tính từ Gross sang Net là một hàm không tuyến tính (bị gãy khúc). Việc dùng một công thức toán học đảo ngược duy nhất là rất phức tạp và dễ sai số.
-          </p>
-          <p className="leading-relaxed mb-2">
-            Vì vậy, hệ thống sử dụng thuật toán <strong>Tìm kiếm nhị phân (Binary Search)</strong> để dò ngược kết quả với độ chính xác tuyệt đối:
-          </p>
-          <ul className="space-y-2 list-decimal pl-5 text-slate-700">
-            <li>Máy tính lấy một mức <strong>Gross giả định</strong> (nằm giữa mức Net và một con số rất lớn).</li>
-            <li>Dùng công thức Gross ➔ Net ở trên để tính ra mức <strong>Net giả định</strong>.</li>
-            <li>So sánh: Nếu <strong>Net giả định &lt; Net mục tiêu</strong>, máy tính tự động tăng mức Gross giả định lên. Nếu lớn hơn thì giảm xuống.</li>
-            <li>Lặp lại quá trình chia đôi khoảng cách này liên tục cho đến khi sai số <strong>nhỏ hơn 1 VNĐ</strong>.</li>
-          </ul>
-        </section>
       </div>
     </div>
   );
