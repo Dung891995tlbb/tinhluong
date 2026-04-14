@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import { Settings2, ChevronDown, ChevronUp } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
 import { CalculationParams } from "../types";
@@ -81,6 +82,48 @@ export default function SettingsPanel({ show, setShow, params, onParamChange }: 
 }
 
 function SettingInput({ label, value, onChange, unit = "VNĐ" }: { label: string; value: number; onChange: (val: string) => void; unit?: string }) {
+  const [localValue, setLocalValue] = useState(unit === "%" ? value.toString() : formatCurrency(value));
+
+  useEffect(() => {
+    if (unit === "%") {
+      // Only update if the parsed value is different to avoid cursor jumping
+      if (parseFloat(localValue) !== value) {
+        setLocalValue(value.toString());
+      }
+    } else {
+      setLocalValue(formatCurrency(value));
+    }
+  }, [value, unit]);
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    let val = e.target.value;
+    
+    if (unit === "%") {
+      // Allow empty string, single dot, or numbers with decimals
+      if (val === "" || val === ".") {
+        setLocalValue(val);
+        onChange("0");
+        return;
+      }
+      // Prevent multiple dots
+      if ((val.match(/\./g) || []).length > 1) return;
+      // Prevent non-numeric characters except dot
+      if (/[^0-9.]/.test(val)) return;
+      
+      setLocalValue(val);
+      onChange(val);
+    } else {
+      const numeric = parseCurrency(val);
+      setLocalValue(numeric === 0 ? "" : formatCurrency(numeric));
+      onChange(numeric.toString());
+    }
+  };
+
+  const handleFocus = (e: React.FocusEvent<HTMLInputElement>) => {
+    // Select all text on focus to make it easier to replace
+    e.target.select();
+  };
+
   return (
     <div>
       <label className="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">
@@ -88,10 +131,10 @@ function SettingInput({ label, value, onChange, unit = "VNĐ" }: { label: string
       </label>
       <div className="relative">
         <input
-          type={unit === "%" ? "number" : "text"}
-          step={unit === "%" ? "0.1" : undefined}
-          value={unit === "%" ? value : formatCurrency(value)}
-          onChange={(e) => onChange(e.target.value)}
+          type="text"
+          value={localValue}
+          onChange={handleChange}
+          onFocus={handleFocus}
           className="w-full bg-white border border-slate-200 rounded-lg py-2 px-3 text-sm font-bold text-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all pr-10"
         />
         <span className="absolute right-3 top-1/2 -translate-y-1/2 text-[10px] font-bold text-slate-300">{unit}</span>
@@ -99,3 +142,4 @@ function SettingInput({ label, value, onChange, unit = "VNĐ" }: { label: string
     </div>
   );
 }
+

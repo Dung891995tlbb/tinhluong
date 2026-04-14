@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { CheckCircle2, AlertCircle } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 
@@ -63,8 +63,15 @@ export default function App() {
   };
 
   const handleParamChange = (key: keyof CalculationParams, value: string) => {
-    const numeric = parseCurrency(value);
-    setParams(prev => ({ ...prev, [key]: numeric }));
+    if (key === 'tyLeBH') {
+      // If the value ends with a dot, don't parse it yet to allow typing decimals
+      if (value.endsWith('.')) return;
+      const numeric = parseFloat(value) || 0;
+      setParams(prev => ({ ...prev, [key]: numeric }));
+    } else {
+      const numeric = parseCurrency(value);
+      setParams(prev => ({ ...prev, [key]: numeric }));
+    }
   };
 
   return (
