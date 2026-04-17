@@ -1,13 +1,15 @@
 import { Info } from "lucide-react";
-import { CalculationResult } from "../types";
+import { CalculationResult, CalculationParams } from "../types";
 import { formatCurrency, cn } from "../lib/utils";
 
 interface BreakdownTableProps {
   result: CalculationResult;
-  mode: 'gross-to-net' | 'net-to-gross';
+  mode: 'gross-to-net' | 'net-to-gross' | 'build-gross';
+  params?: CalculationParams;
 }
 
-export default function BreakdownTable({ result, mode }: BreakdownTableProps) {
+export default function BreakdownTable({ result, mode, params }: BreakdownTableProps) {
+  const tyLeThueNha = params?.tyLeThueNha ?? 15;
   return (
     <div>
       <div className="flex items-center gap-2 mb-4">
@@ -27,7 +29,7 @@ export default function BreakdownTable({ result, mode }: BreakdownTableProps) {
         <div className="h-px bg-slate-100 my-2" />
         
         <BreakdownItem label="Thu nhập chịu thuế (chưa tính thuê nhà)" value={result.totalTaxableIncome - result.taxableRent} />
-        <BreakdownItem label="Tiền thuê nhà tính vào TNCT (Max 15%)" value={result.taxableRent} />
+        <BreakdownItem label={`Tiền thuê nhà tính vào TNCT (Max ${tyLeThueNha}%)`} value={result.taxableRent} />
         <BreakdownItem label="Tổng Thu nhập chịu thuế (TNCT)" value={result.totalTaxableIncome} isHighlight />
         
         <div className="h-px bg-slate-100 my-2" />

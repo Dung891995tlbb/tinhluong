@@ -7,6 +7,8 @@ export interface CalculationParams {
   chuyenCan: number;
   giamTruGiaCanh: number;
   tyLeBH: number;
+  hoanThanhCV: number;
+  tyLeThueNha: number;
 }
 
 export interface CalculationResult {
@@ -29,4 +31,4 @@ export interface CalculationResult {
   pit: number;
 }
 
-export type CalculationMode = 'gross-to-net' | 'net-to-gross';
+export type CalculationMode = 'gross-to-net' | 'net-to-gross' | 'build-gross';

@@ -9,6 +9,8 @@ export const DEFAULT_PARAMS: CalculationParams = {
   chuyenCan: 3000000,
   giamTruGiaCanh: 15500000,
   tyLeBH: 9.5,
+  hoanThanhCV: 11158192,
+  tyLeThueNha: 15,
 };
 
 export const PIT_BRACKETS = [

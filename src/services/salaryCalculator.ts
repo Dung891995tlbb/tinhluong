@@ -27,14 +27,14 @@ export function calculatePIT(tntt: number): number {
  * Calculate Net Salary from Gross Salary
  */
 export function calculateNetFromGross(gross: number, params: CalculationParams): CalculationResult {
-  const { luongBH, anCa, xangXe, dienThoai, thueNha, chuyenCan, giamTruGiaCanh, tyLeBH } = params;
+  const { luongBH, anCa, xangXe, dienThoai, thueNha, chuyenCan, giamTruGiaCanh, tyLeBH, tyLeThueNha } = params;
   
   const hoanThanhCV = gross - (luongBH + anCa + xangXe + dienThoai + thueNha + chuyenCan);
   
   const nonTaxable = xangXe + dienThoai;
   const tnctChuaThueNha = gross - nonTaxable - thueNha;
   
-  const taxableRent = Math.min(thueNha, tnctChuaThueNha * 0.15);
+  const taxableRent = Math.min(thueNha, tnctChuaThueNha * (tyLeThueNha / 100));
   const totalTaxableIncome = tnctChuaThueNha + taxableRent;
   
   const insurance = luongBH * (tyLeBH / 100);

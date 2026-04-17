@@ -1,6 +1,7 @@
 import { BookOpen, CheckCircle2, Calculator, ArrowRight } from "lucide-react";
 
-export default function ExplanationPanel() {
+export default function ExplanationPanel({ params }: { params?: any }) {
+  const tyLeThueNha = params?.tyLeThueNha ?? 15;
   return (
     <div className="bg-white rounded-3xl shadow-xl shadow-slate-200/60 border border-slate-100 p-6 md:p-8 h-full">
       <div className="flex items-center gap-3 mb-6">
@@ -32,7 +33,7 @@ export default function ExplanationPanel() {
             Quy tắc Tiền thuê nhà
           </h3>
           <p className="leading-relaxed">
-            Tiền thuê nhà do công ty trả thay được tính vào thu nhập chịu thuế, nhưng <strong>không vượt quá 15%</strong> tổng thu nhập chịu thuế (chưa bao gồm tiền thuê nhà).
+            Tiền thuê nhà do công ty trả thay được tính vào thu nhập chịu thuế, nhưng <strong>không vượt quá {tyLeThueNha}%</strong> tổng thu nhập chịu thuế (chưa bao gồm tiền thuê nhà).
           </p>
         </section>
 
@@ -52,7 +53,7 @@ export default function ExplanationPanel() {
             </li>
             <li className="flex items-start gap-2">
               <ArrowRight className="w-4 h-4 text-slate-400 shrink-0 mt-0.5" />
-              <span><strong className="text-slate-700">Thuê nhà chịu thuế</strong> = Min(Tiền thuê nhà, 15% * TNCT chưa thuê nhà)</span>
+              <span><strong className="text-slate-700">Thuê nhà chịu thuế</strong> = Min(Tiền thuê nhà, {tyLeThueNha}% * TNCT chưa thuê nhà)</span>
             </li>
             <li className="flex items-start gap-2">
               <ArrowRight className="w-4 h-4 text-slate-400 shrink-0 mt-0.5" />

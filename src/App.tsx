@@ -58,12 +58,16 @@ export default function App() {
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const val = e.target.value;
-    const numeric = parseCurrency(val);
-    setInputValue(formatCurrency(numeric));
+    if (val === "") {
+      setInputValue("");
+      return;
+    }
+    const numeric = parseFloat(val) || 0; // Because it receives raw digits now from SalaryInput
+    setInputValue(numeric === 0 ? "" : formatCurrency(numeric));
   };
 
   const handleParamChange = (key: keyof CalculationParams, value: string) => {
-    if (key === 'tyLeBH') {
+    if (key === 'tyLeBH' || key === 'tyLeThueNha') {
       // If the value ends with a dot, don't parse it yet to allow typing decimals
       if (value.endsWith('.')) return;
       const numeric = parseFloat(value) || 0;
@@ -118,7 +122,7 @@ export default function App() {
                         </div>
                       </div>
 
-                      <BreakdownTable result={result} mode={mode} />
+                      <BreakdownTable result={result} mode={mode} params={params} />
                     </motion.div>
                   ) : error ? (
                     <motion.div 
@@ -142,7 +146,7 @@ export default function App() {
 
           {/* Explanation Column */}
           <div className="lg:col-span-5">
-            <ExplanationPanel />
+            <ExplanationPanel params={params} />
           </div>
         </div>
       </motion.div>

@@ -69,6 +69,12 @@ export default function SettingsPanel({ show, setShow, params, onParamChange }: 
                 onChange={(val) => onParamChange('thueNha', val)} 
               />
               <SettingInput 
+                label="Giới hạn thuê nhà chịu thuế (%)" 
+                value={params.tyLeThueNha} 
+                onChange={(val) => onParamChange('tyLeThueNha', val)} 
+                unit="%"
+              />
+              <SettingInput 
                 label="Giảm trừ gia cảnh" 
                 value={params.giamTruGiaCanh} 
                 onChange={(val) => onParamChange('giamTruGiaCanh', val)} 
@@ -83,17 +89,17 @@ export default function SettingsPanel({ show, setShow, params, onParamChange }: 
 
 function SettingInput({ label, value, onChange, unit = "VNĐ" }: { label: string; value: number; onChange: (val: string) => void; unit?: string }) {
   const [localValue, setLocalValue] = useState(unit === "%" ? value.toString() : formatCurrency(value));
+  const [isFocused, setIsFocused] = useState(false);
 
   useEffect(() => {
+    if (isFocused) return; // Don't override while user is typing
+    
     if (unit === "%") {
-      // Only update if the parsed value is different to avoid cursor jumping
-      if (parseFloat(localValue) !== value) {
-        setLocalValue(value.toString());
-      }
+      setLocalValue(value.toString());
     } else {
-      setLocalValue(formatCurrency(value));
+      setLocalValue(value === 0 ? "0" : formatCurrency(value));
     }
-  }, [value, unit]);
+  }, [value, unit, isFocused]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     let val = e.target.value;
@@ -113,20 +119,36 @@ function SettingInput({ label, value, onChange, unit = "VNĐ" }: { label: string
       setLocalValue(val);
       onChange(val);
     } else {
-      const numeric = parseCurrency(val);
-      setLocalValue(numeric === 0 ? "" : formatCurrency(numeric));
-      onChange(numeric.toString());
+      // For currency, while typing, just keep the raw numbers
+      const numericString = val.replace(/\D/g, "");
+      setLocalValue(numericString);
+      onChange(numericString === "" ? "0" : numericString);
     }
   };
 
   const handleFocus = (e: React.FocusEvent<HTMLInputElement>) => {
-    // Select all text on focus to make it easier to replace
-    e.target.select();
+    setIsFocused(true);
+    if (unit !== "%" && value !== 0) {
+      // Strip formatting when focused for easy editing
+      setLocalValue(value.toString());
+    } else if (unit !== "%" && value === 0) {
+      setLocalValue("");
+    }
+  };
+
+  const handleBlur = () => {
+    setIsFocused(false);
+    if (unit !== "%") {
+      setLocalValue(value === 0 ? "0" : formatCurrency(value));
+    } else {
+      onChange(value.toString());
+      setLocalValue(value.toString());
+    }
   };
 
   return (
     <div>
-      <label className="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">
+      <label className="block text-[10px] items-center gap-1 font-black text-slate-400 uppercase tracking-widest mb-1">
         {label}
       </label>
       <div className="relative">
@@ -135,6 +157,7 @@ function SettingInput({ label, value, onChange, unit = "VNĐ" }: { label: string
           value={localValue}
           onChange={handleChange}
           onFocus={handleFocus}
+          onBlur={handleBlur}
           className="w-full bg-white border border-slate-200 rounded-lg py-2 px-3 text-sm font-bold text-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all pr-10"
         />
         <span className="absolute right-3 top-1/2 -translate-y-1/2 text-[10px] font-bold text-slate-300">{unit}</span>
